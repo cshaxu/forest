@@ -12,8 +12,22 @@ plugins {
     id 'application'
 }
 
+dependencies {
+    implementation platform('io.dropwizard:dropwizard-bom:4.0.0')
+    implementation 'io.dropwizard:dropwizard-core'
+    implementation 'com.google.inject:guice:7.0.0'
+}
+
 shadowJar {
     transform(ServiceFileTransformer)
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
+}
+
+task runServer(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = application.mainClass
+
+    // arguments to pass to the application
+    args 'server', '_infra/server.yml'
 }

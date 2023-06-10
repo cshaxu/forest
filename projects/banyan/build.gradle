@@ -8,8 +8,6 @@ plugins {
 }
 
 dependencies {
-    implementation platform('io.dropwizard:dropwizard-bom:4.0.0')
-    implementation 'io.dropwizard:dropwizard-core'
     implementation 'org.apache.commons:commons-text'
     implementation project(':projects:utilities')
 }

@@ -12,6 +12,7 @@
 #                Server Settings
 # =============================================
 # See for details: https://dropwizard.github.io/dropwizard/manual/configuration.html#servers
+# Generate Java Key Store: `keytool -genkeypair -alias banyan -keyalg RSA -keysize 2048 -keystore _infra/keys.jks`
 server:
   applicationConnectors:
     - type: http
@@ -20,8 +21,8 @@ server:
       port: 8443
       excludedProtocols: [SSLv3]
       supportedProtocols: [TLSv1, TLSv1.1, TLSv1.2]
-      keyStorePath: var/conf/keyStore.jks
-      keyStorePassword: dropwizard-angular-gradle
+      keyStorePath: _infra/keys.jks
+      keyStorePassword: development
       validateCerts: false
   applicationContextPath: /
   adminConnectors:
@@ -31,8 +32,8 @@ server:
   requestLog:
     appenders:
       - type: file
-        currentLogFilename: var/log/requests.log
-        archivedLogFilenamePattern: var/log/requests-%d.log
+        currentLogFilename: build/server/var/log/requests.log
+        archivedLogFilenamePattern: build/server/var/log/requests-%d.log
         archivedFileCount: 5
         timeZone: UTC
         threshold: INFO
@@ -42,8 +43,8 @@ server:
 logging:
   appenders:
     - type: file
-      currentLogFilename: var/log/banyan-current.log
-      archivedLogFilenamePattern: var/log/banyan-%d.log
+      currentLogFilename: build/server/var/log/banyan-current.log
+      archivedLogFilenamePattern: build/server/var/log/banyan-%d.log
       archivedFileCount: 5
       timeZone: UTC
       threshold: INFO

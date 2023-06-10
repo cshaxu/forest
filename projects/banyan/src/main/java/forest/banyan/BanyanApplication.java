@@ -3,27 +3,30 @@
  */
 package forest.banyan;
 
-import static forest.banyan.MessageUtils.getMessage;
-import static forest.utilities.StringUtils.join;
-import static forest.utilities.StringUtils.split;
-
-import forest.list.LinkedList;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import forest.banyan.resources.TestResource;
 import io.dropwizard.core.Application;
-import org.apache.commons.text.WordUtils;
+import io.dropwizard.core.setup.Environment;
 
 public class BanyanApplication extends Application<BanyanConfiguration> {
 
   private static final String NAME = "Banyan";
+
+  public static void main(final String[] args) throws Exception {
+    new BanyanApplication().run(args);
+  }
 
   @Override
   public String getName() {
     return NAME;
   }
 
-  public static void main(String[] args) {
-    LinkedList tokens;
-    tokens = split(getMessage());
-    String result = join(tokens);
-    System.out.println(WordUtils.capitalize(result));
+  @Override
+  public void run(final BanyanConfiguration configuration, final Environment environment) {
+    final Injector injector = Guice.createInjector();
+    final BanyanHealthCheck healthCheck = new BanyanHealthCheck(getName());
+    environment.healthChecks().register("template", healthCheck);
+    environment.jersey().register(new TestResource());
   }
 }
