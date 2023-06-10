@@ -8,9 +8,18 @@ import static forest.utilities.StringUtils.join;
 import static forest.utilities.StringUtils.split;
 
 import forest.list.LinkedList;
+import io.dropwizard.core.Application;
 import org.apache.commons.text.WordUtils;
 
-public class BanyanApplication {
+public class BanyanApplication extends Application<BanyanConfiguration> {
+
+  private static final String NAME = "Banyan";
+
+  @Override
+  public String getName() {
+    return NAME;
+  }
+
   public static void main(String[] args) {
     LinkedList tokens;
     tokens = split(getMessage());

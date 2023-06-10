@@ -1,12 +1,12 @@
 # Dropwizard Configuration File
 # See for details: https://dropwizard.github.io/dropwizard/manual/configuration.html
 
-database:
-  connection:
-    driverClass: org.postgresql.Driver
-    user: db_user
-    password: db_pass
-    url: jdbc:postgresql://localhost/dbname
+# database:
+#   connection:
+#     driverClass: org.postgresql.Driver
+#     user: db_user
+#     password: db_pass
+#     url: jdbc:postgresql://localhost/dbname
 
 # =============================================
 #                Server Settings
