@@ -12,17 +12,9 @@ dependencies {
     implementation project(':projects:utilities')
 }
 
-def jacocoClassPathsToExclude = [
+project.ext.jacocoClassPathsToExclude = [
     'forest/banyan/BanyanApplication*',
 ]
-
-jacocoTestReport {
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: jacocoClassPathsToExclude)
-        }))
-    }
-}
 
 application {
     // Define the main class for the application.

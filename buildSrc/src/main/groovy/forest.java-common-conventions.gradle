@@ -9,7 +9,6 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'com.diffplug.spotless'
-    id 'com.github.johnrengelman.shadow'
 }
 
 repositories {
@@ -62,6 +61,18 @@ task openJacocoTestReport(dependsOn: 'jacocoTestReport') {
 jacocoTestReport.dependsOn(test)
 // open report after jacocoTestReport
 jacocoTestReport.finalizedBy(openJacocoTestReport)
+
+ext {
+    jacocoClassPathsToExclude = []
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: project.ext.jacocoClassPathsToExclude)
+        }))
+    }
+}
 
 spotless {
     java {

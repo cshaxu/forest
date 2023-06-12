@@ -10,12 +10,17 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+
+    // now, the plugins that are needed by java applications only
+    id 'com.github.johnrengelman.shadow'
+    id 'com.microsoft.thrifty'
 }
 
 dependencies {
     implementation platform('io.dropwizard:dropwizard-bom:4.0.0')
     implementation 'io.dropwizard:dropwizard-core'
     implementation 'com.google.inject:guice:7.0.0'
+    implementation 'org.apache.thrift:libthrift:0.13.0'
 }
 
 shadowJar {
@@ -31,3 +36,14 @@ task runServer(type: JavaExec) {
     // arguments to pass to the application
     args 'server', '_infra/server.yml'
 }
+
+sourceSets {
+    main {
+        java {
+            // Add generated java files to the Java source set
+            srcDirs = ['src/main/java', 'build/generated/sources/thrifty']
+        }
+    }
+}
+
+thrifty { java {} }
